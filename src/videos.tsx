@@ -65,9 +65,7 @@ function Videos() {
         {/* <div className="paper"></div> */}
         <div className="paper stage1 font-bold text-2xl m-auto! mb-[60px]! min-w-full pt-[40px]! pb-[40px]!">
           <div className="text flex justify-between flex-row-reverse">
-            <div className="lesson-title">
-              الدرس الأول: الاقتران الزوجي
-            </div>
+            <div className="lesson-title">الدرس الأول: الاقتران الزوجي</div>
             <ChevronLeft
               style={{
                 rotate: videoHidden1 ? "-1deg" : "-90deg",
@@ -77,17 +75,28 @@ function Videos() {
               size={32}
             />
           </div>
-          <div className="mt-[30px]! paper w-full" style={{ display: videoHidden1 ? "none" : "block" }}>
-            <video
+          <div
+            className="mt-[30px]! paper w-full"
+            style={{ display: videoHidden1 ? "none" : "block" }}
+          >
+            <iframe
               style={{ display: videoHidden1 ? "none" : "block" }}
-              className="mt-10! rounded-xl"
-              controls
+              className="mt-10! rounded-xl w-full h-[400px]"
               src={videos[0]?.src}
-            ></video>
+              title={videos[0]?.title || "Video"}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
             <div className="mt-[20px]! flex justify-evenly flex-row-reverse">
               {/* <span></span> */}
               <p className="font-bold text-2xl text-red-600">الاقتران الزوجي</p>
-              <a className="text-3xl hover:rotate-[360deg] duration-500" href={videos[0]?.src} download>
+              <a
+                className="text-3xl hover:rotate-[360deg] duration-500"
+                href={videos[0]?.src}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon icon={faDownload}></FontAwesomeIcon>
               </a>
             </div>
