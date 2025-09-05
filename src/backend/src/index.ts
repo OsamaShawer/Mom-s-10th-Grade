@@ -35,10 +35,7 @@ app.get("/videos", async (req, res) => {
   const password = req.headers["x-password"];
   if (password === securityCode) {
     res.json({
-      videos: [{ 
-        id: 1, 
-        src: "https://drive.google.com/uc?export=download&id=YOUR_GOOGLE_DRIVE_FILE_ID" // Replace with your Google Drive file ID
-      }],
+      videos: [{ id: 1, src: "http://localhost:3000/media/Even_function.mp4" }],
     });
   } else {
     res.status(401).json({ message: "Not auth" });
@@ -70,10 +67,7 @@ app.get("/all", async (req, res) => {
         { id: 3, src: "http://localhost:3000/media/HomeworkEven.jpg" },
         { id: 4, src: "http://localhost:3000/media/SummaryEven.jpg" },
       ],
-      videos: [{ 
-        id: 1, 
-        src: "https://drive.google.com/uc?export=download&id=YOUR_GOOGLE_DRIVE_FILE_ID" // Replace with your Google Drive file ID
-      }],
+      videos: [{ id: 1, src: "http://localhost:3000/media/Even_function.mp4" }],
     });
   } else {
     res.status(401).json({ message: "Not auth" });
