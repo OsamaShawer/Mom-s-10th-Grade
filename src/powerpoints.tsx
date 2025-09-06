@@ -6,6 +6,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChevronLeft } from "lucide-react";
 import { useEffect, useState } from "react";
+import API_BASE_URL from "./config/api";
 
 function Powerpoints() {
   const [fileHidden1, setfileHidden1] = useState(true);
@@ -35,12 +36,9 @@ function Powerpoints() {
   const password: any = sessionStorage.getItem("code");
   useEffect(() => {
     async function fetchFiles() {
-      const response = await fetch(
-        "http://localhost:3000/powerpoints",
-        {
-          headers: { "x-password": password },
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/powerpoints`, {
+        headers: { "x-password": password },
+      });
       const data = await response.json();
       if (!password) {
         setAuth(false);

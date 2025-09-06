@@ -7,6 +7,7 @@ import {
   faImage,
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
+import API_BASE_URL from "./config/api";
 
 function All() {
   const [auth, setAuth] = useState(true);
@@ -41,17 +42,14 @@ function All() {
       if (!password) {
         setAuth(false);
       } else {
-        const response = await fetch(
-          "http://localhost:3000/all",
-          {
-            headers: { "x-password": password },
-          }
-        );
+        const response = await fetch(`${API_BASE_URL}/all`, {
+          headers: { "x-password": password },
+        });
         const data = await response.json();
         if (response.status === 200) {
           setVideos(data.videos);
           setFiles(data.files);
-          setDownloads(data.downloads)
+          setDownloads(data.downloads);
         } else {
           setAuth(false);
         }

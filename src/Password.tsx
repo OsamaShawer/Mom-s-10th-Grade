@@ -1,6 +1,7 @@
 // import { Button, Paper, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState, type ChangeEvent } from "react";
+import API_BASE_URL from "./config/api";
 
 function PasswordComponent() {
   const [data, setData] = useState({ security: "" });
@@ -13,7 +14,7 @@ function PasswordComponent() {
   }
   async function click() {
     setWrong(false);
-    const response = await fetch("http://localhost:3000", {
+    const response = await fetch(`${API_BASE_URL}`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

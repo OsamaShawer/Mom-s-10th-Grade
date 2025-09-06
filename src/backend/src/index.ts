@@ -3,11 +3,14 @@ import cors from "cors";
 import path from "path";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://osamashawer.github.io"
+        : "http://localhost:5173",
   })
 );
 
@@ -35,9 +38,18 @@ app.get("/videos", async (req, res) => {
   const password = req.headers["x-password"];
   if (password === securityCode) {
     res.json({
-      videos: [{ id: 1, src: "https://drive.google.com/file/d/1jORF6ky6pHd6znFHHXJONO-KJCbcqJFv/view?usp=drivesdk" }],
-      downloads: [{ id: 1, src: "https://drive.google.com/uc?export=download&id=1jORF6ky6pHd6znFHHXJONO-KJCbcqJFv" }]
-
+      videos: [
+        {
+          id: 1,
+          src: "https://drive.google.com/file/d/1jORF6ky6pHd6znFHHXJONO-KJCbcqJFv/view?usp=drivesdk",
+        },
+      ],
+      downloads: [
+        {
+          id: 1,
+          src: "https://drive.google.com/uc?export=download&id=1jORF6ky6pHd6znFHHXJONO-KJCbcqJFv",
+        },
+      ],
     });
   } else {
     res.status(401).json({ message: "Not auth" });
@@ -47,30 +59,51 @@ app.get("/videos", async (req, res) => {
 app.get("/powerpoints", async (req, res) => {
   const password = req.headers["x-password"];
   if (password === securityCode) {
+    const baseUrl =
+      process.env.NODE_ENV === "production"
+        ? "https://your-backend-url.railway.app"
+        : "http://localhost:3000";
+
     res.json({
       files: [
-        { id: 1, src: "http://localhost:3000/media/الاقتران الزوجي.pdf" },
-        { id: 2, src: "http://localhost:3000/media/solved.pdf" },
-        { id: 3, src: "http://localhost:3000/media/HomeworkEven.jpg" },
-        { id: 4, src: "http://localhost:3000/media/SummaryEven.jpg" },
+        { id: 1, src: `${baseUrl}/media/الاقتران الزوجي.pdf` },
+        { id: 2, src: `${baseUrl}/media/solved.pdf` },
+        { id: 3, src: `${baseUrl}/media/HomeworkEven.jpg` },
+        { id: 4, src: `${baseUrl}/media/SummaryEven.jpg` },
       ],
     });
   } else {
     res.status(401).json({ message: "Not auth" });
   }
 });
+
 app.get("/all", async (req, res) => {
   const password = req.headers["x-password"];
   if (password === securityCode) {
+    const baseUrl =
+      process.env.NODE_ENV === "production"
+        ? "https://your-backend-url.railway.app"
+        : "http://localhost:3000";
+
     res.json({
       files: [
-        { id: 1, src: "http://localhost:3000/media/الاقتران الزوجي.pdf" },
-        { id: 2, src: "http://localhost:3000/media/solved.pdf" },
-        { id: 3, src: "http://localhost:3000/media/HomeworkEven.jpg" },
-        { id: 4, src: "http://localhost:3000/media/SummaryEven.jpg" },
+        { id: 1, src: `${baseUrl}/media/الاقتران الزوجي.pdf` },
+        { id: 2, src: `${baseUrl}/media/solved.pdf` },
+        { id: 3, src: `${baseUrl}/media/HomeworkEven.jpg` },
+        { id: 4, src: `${baseUrl}/media/SummaryEven.jpg` },
       ],
-      videos: [{ id: 1, src: "https://drive.google.com/file/d/1jORF6ky6pHd6znFHHXJONO-KJCbcqJFv/view?usp=drivesdk" }],
-      downloads: [{ id: 1, src: "https://drive.google.com/uc?export=download&id=1jORF6ky6pHd6znFHHXJONO-KJCbcqJFv" }]
+      videos: [
+        {
+          id: 1,
+          src: "https://drive.google.com/file/d/1jORF6ky6pHd6znFHHXJONO-KJCbcqJFv/view?usp=drivesdk",
+        },
+      ],
+      downloads: [
+        {
+          id: 1,
+          src: "https://drive.google.com/uc?export=download&id=1jORF6ky6pHd6znFHHXJONO-KJCbcqJFv",
+        },
+      ],
     });
   } else {
     res.status(401).json({ message: "Not auth" });
@@ -78,5 +111,5 @@ app.get("/all", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Working on Port 3000");
+  console.log(`Working on Port ${port}`);
 });
