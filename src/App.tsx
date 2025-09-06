@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { HashRouter, Routes, Route } from "react-router-dom"
 import PasswordComponent from "./Password"
 import Videos from "./videos"
 import Header from "./headers"
@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
+      <HashRouter>
       <Header />
         <Routes>
           <Route path="/" element={<PasswordComponent />}></Route>
@@ -16,7 +16,7 @@ function App() {
           <Route path="/powerpoints" element={<Powerpoints />}></Route>
           <Route path="/all" element={<All />}></Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </>
   )
 }
