@@ -1,0 +1,4 @@
+[33m208d243[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Final updates for video hosting
+[33m8db56f7[m Update backend to use external video hosting
+[33m870a314[m Configure Git LFS for video files
+[33m85d2697[m Initial commit: React + TypeScript + Vite project with backend

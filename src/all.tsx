@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft } from "lucide-react"; // arrow icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload, faFilePdf, faImage } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  faFilePdf,
+  faImage,
+  faPlay,
+} from "@fortawesome/free-solid-svg-icons";
 
 function All() {
   const [auth, setAuth] = useState(true);
   const [videos, setVideos] = useState<any[]>([]);
   const [files, setFiles] = useState<any[]>([]);
+  const [downloads, setDownloads] = useState<any[]>([]);
   const [fileHidden1, setfileHidden1] = useState(true);
   const [fileHidden2, setfileHidden2] = useState(true);
   const [fileHidden3, setfileHidden3] = useState(true);
@@ -35,13 +41,17 @@ function All() {
       if (!password) {
         setAuth(false);
       } else {
-        const response = await fetch("http://localhost:3000/all", {
-          headers: { "x-password": password },
-        });
+        const response = await fetch(
+          "http://localhost:3000/all",
+          {
+            headers: { "x-password": password },
+          }
+        );
         const data = await response.json();
         if (response.status === 200) {
           setVideos(data.videos);
           setFiles(data.files);
+          setDownloads(data.downloads)
         } else {
           setAuth(false);
         }
@@ -81,18 +91,21 @@ function All() {
             className="mt-[30px]! paper min-w-full flex"
             style={{ display: fileHidden1 ? "none" : "block" }}
           >
-            <video
+            <a
               style={{ display: fileHidden1 ? "none" : "block" }}
-              className="mt-10! rounded-xl"
-              controls
-              src={videos[0]?.src}
-            ></video>
+              className="mt-10! text-center text-green-400 w-full"
+              href={videos[0]?.src}
+              title="Video"
+              target="_blank"
+            >
+              مشاهدة الفيديو <FontAwesomeIcon icon={faPlay}></FontAwesomeIcon>
+            </a>
             <div className="mt-[20px]! flex justify-evenly flex-row-reverse">
               {/* <span></span> */}
               <p className="font-bold text-2xl text-red-600">الاقتران الزوجي</p>
               <a
                 className="text-3xl hover:rotate-[360deg] duration-500"
-                href={videos[0]?.src}
+                href={downloads[0]?.src}
                 download
               >
                 <FontAwesomeIcon icon={faDownload}></FontAwesomeIcon>

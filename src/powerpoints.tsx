@@ -1,4 +1,8 @@
-import { faDownload, faFilePdf, faImage } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  faFilePdf,
+  faImage,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChevronLeft } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -31,9 +35,12 @@ function Powerpoints() {
   const password: any = sessionStorage.getItem("code");
   useEffect(() => {
     async function fetchFiles() {
-      const response = await fetch("http://localhost:3000/powerpoints", {
-        headers: { "x-password": password },
-      });
+      const response = await fetch(
+        "http://localhost:3000/powerpoints",
+        {
+          headers: { "x-password": password },
+        }
+      );
       const data = await response.json();
       if (!password) {
         setAuth(false);
@@ -67,9 +74,7 @@ function Powerpoints() {
         {/* <div className="paper"></div> */}
         <div className="paper stage1 font-bold text-2xl m-auto! mb-[60px]! min-w-full pt-[40px]! pb-[40px]!">
           <div className="text flex justify-between flex-row-reverse">
-            <div className="lesson-title">
-              الدرس الأول: الاقتران الزوجي
-            </div>
+            <div className="lesson-title">الدرس الأول: الاقتران الزوجي</div>
             <ChevronLeft
               style={{
                 rotate: fileHidden1 ? "-1deg" : "-90deg",

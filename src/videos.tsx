@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft } from "lucide-react"; // arrow icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 function Videos() {
   const [auth, setAuth] = useState(true);
   const [videos, setVideos] = useState<any[]>([]);
+  const [downloads, setDownloads] = useState<any[]>([]);
   const [videoHidden1, setVideoHidden1] = useState(true);
   const [videoHidden2, setVideoHidden2] = useState(true);
   const [videoHidden3, setVideoHidden3] = useState(true);
@@ -40,6 +41,7 @@ function Videos() {
         const data = await response.json();
         if (response.status === 200) {
           setVideos(data.videos);
+          setDownloads(data.downloads)
         } else {
           setAuth(false);
         }
@@ -76,26 +78,26 @@ function Videos() {
             />
           </div>
           <div
-            className="mt-[30px]! paper w-full"
+            className="mt-[30px]! paper min-w-full"
             style={{ display: videoHidden1 ? "none" : "block" }}
           >
-            <iframe
+            <a
               style={{ display: videoHidden1 ? "none" : "block" }}
-              className="mt-10! rounded-xl w-full h-[400px]"
-              src={videos[0]?.src}
-              title={videos[0]?.title || "Video"}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+              className="mt-10! text-center text-green-400 w-full"
+              href={videos[0]?.src}
+              title="Video"
+              target="_blank"
+            >
+              مشاهدة الفيديو <FontAwesomeIcon icon={faPlay}></FontAwesomeIcon>
+            </a>
             <div className="mt-[20px]! flex justify-evenly flex-row-reverse">
               {/* <span></span> */}
               <p className="font-bold text-2xl text-red-600">الاقتران الزوجي</p>
               <a
                 className="text-3xl hover:rotate-[360deg] duration-500"
-                href={videos[0]?.src}
+                href={downloads[0]?.src}
                 target="_blank"
-                rel="noopener noreferrer"
+                download
               >
                 <FontAwesomeIcon icon={faDownload}></FontAwesomeIcon>
               </a>
