@@ -47,7 +47,7 @@ function Videos() {
           }
           return;
         }
-        
+
         // For development, use backend API
         const response = await fetch(`${API_BASE_URL}/videos`, {
           headers: { "x-password": password },
