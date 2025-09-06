@@ -8,6 +8,7 @@ import {
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import API_BASE_URL from "./config/api";
+import { staticData, securityCode } from "./data/staticData";
 
 function All() {
   const [auth, setAuth] = useState(true);
@@ -42,6 +43,19 @@ function All() {
       if (!password) {
         setAuth(false);
       } else {
+        // For production, use static data since backend isn't deployed yet
+        if (import.meta.env.PROD) {
+          if (password === securityCode) {
+            setVideos(staticData.videos);
+            setFiles(staticData.files);
+            setDownloads(staticData.downloads);
+          } else {
+            setAuth(false);
+          }
+          return;
+        }
+
+        // For development, use backend API
         const response = await fetch(`${API_BASE_URL}/all`, {
           headers: { "x-password": password },
         });

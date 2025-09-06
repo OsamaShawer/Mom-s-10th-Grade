@@ -2,6 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, type ChangeEvent } from "react";
 import API_BASE_URL from "./config/api";
+import { securityCode } from "./data/staticData";
 
 function PasswordComponent() {
   const [data, setData] = useState({ security: "" });
@@ -14,6 +15,19 @@ function PasswordComponent() {
   }
   async function click() {
     setWrong(false);
+
+    // For production, use static validation since backend isn't deployed yet
+    if (import.meta.env.PROD) {
+      if (data.security === securityCode) {
+        sessionStorage.setItem("code", data.security);
+        transfer("/videos");
+      } else {
+        setWrong(true);
+      }
+      return;
+    }
+
+    // For development, use backend API
     const response = await fetch(`${API_BASE_URL}`, {
       method: "POST",
       body: JSON.stringify(data),

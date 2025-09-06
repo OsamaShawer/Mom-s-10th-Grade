@@ -3,6 +3,7 @@ import { ChevronLeft } from "lucide-react"; // arrow icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faPlay } from "@fortawesome/free-solid-svg-icons";
 import API_BASE_URL from "./config/api";
+import { staticData, securityCode } from "./data/staticData";
 
 function Videos() {
   const [auth, setAuth] = useState(true);
@@ -36,6 +37,18 @@ function Videos() {
       if (!password) {
         setAuth(false);
       } else {
+        // For production, use static data since backend isn't deployed yet
+        if (import.meta.env.PROD) {
+          if (password === securityCode) {
+            setVideos(staticData.videos);
+            setDownloads(staticData.downloads);
+          } else {
+            setAuth(false);
+          }
+          return;
+        }
+        
+        // For development, use backend API
         const response = await fetch(`${API_BASE_URL}/videos`, {
           headers: { "x-password": password },
         });

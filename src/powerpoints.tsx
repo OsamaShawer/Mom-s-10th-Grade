@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChevronLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import API_BASE_URL from "./config/api";
+import { staticData, securityCode } from "./data/staticData";
 
 function Powerpoints() {
   const [fileHidden1, setfileHidden1] = useState(true);
@@ -36,6 +37,20 @@ function Powerpoints() {
   const password: any = sessionStorage.getItem("code");
   useEffect(() => {
     async function fetchFiles() {
+      // For production, use static data since backend isn't deployed yet
+      if (import.meta.env.PROD) {
+        if (!password) {
+          setAuth(false);
+        } else if (password === securityCode) {
+          setAuth(true);
+          setFiles(staticData.files);
+        } else {
+          setAuth(false);
+        }
+        return;
+      }
+
+      // For development, use backend API
       const response = await fetch(`${API_BASE_URL}/powerpoints`, {
         headers: { "x-password": password },
       });
